@@ -66,6 +66,7 @@ Migrations:
 
 - `001_initial_schema.sql` — tables, enums, RLS, triggers
 - `002_ticket_dates.sql` — optional start/due dates on tickets
+- `003_fix_qa_ticket_insert_rls.sql` — fix QA ticket create RLS / INSERT RETURNING
 
 See `supabase/seed.sql` for local seed notes and optional demo data.
 

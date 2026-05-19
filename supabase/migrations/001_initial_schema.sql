@@ -209,6 +209,22 @@ AS $$
   SELECT role FROM public.profiles WHERE id = auth.uid();
 $$;
 
+CREATE OR REPLACE FUNCTION public.is_qa()
+RETURNS boolean
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.profiles
+    WHERE id = auth.uid()
+      AND role = 'qa'::public.user_role
+      AND is_active = true
+  );
+$$;
+
 CREATE OR REPLACE FUNCTION public.can_create_ticket(p_project_id uuid)
 RETURNS boolean
 LANGUAGE sql
@@ -219,7 +235,7 @@ AS $$
   SELECT public.is_admin()
     OR (
       public.is_project_member(p_project_id)
-      AND public.current_user_role() = 'qa'
+      AND public.is_qa()
     );
 $$;
 
@@ -452,7 +468,10 @@ CREATE POLICY "tickets_select"
   ON public.tickets
   FOR SELECT
   TO authenticated
-  USING (public.can_access_ticket(id));
+  USING (
+    public.is_admin()
+    OR public.is_project_member(project_id)
+  );
 
 CREATE POLICY "tickets_insert"
   ON public.tickets
@@ -463,7 +482,13 @@ CREATE POLICY "tickets_insert"
     AND created_by = auth.uid()
     AND (
       assignee_id IS NULL
-      OR public.is_project_member(project_id)
+      OR public.is_admin()
+      OR EXISTS (
+        SELECT 1
+        FROM public.project_members pm
+        WHERE pm.project_id = project_id
+          AND pm.user_id = assignee_id
+      )
     )
   );
 
@@ -621,6 +646,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO authentic
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO authenticated;
 
 GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_qa() TO authenticated;
 GRANT EXECUTE ON FUNCTION public.is_project_member(uuid) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.can_access_ticket(uuid) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.shares_project_with(uuid) TO authenticated;

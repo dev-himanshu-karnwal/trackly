@@ -28,6 +28,8 @@ export default async function ProjectLayout({
   if (!project || project.is_archived) notFound();
 
   if (profile.role !== "admin") {
+    if (!profile.is_active) notFound();
+
     const { data: membership } = await supabase
       .from("project_members")
       .select("project_id")

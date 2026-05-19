@@ -70,7 +70,7 @@ export async function createTicket(
   slug: string,
   formData: FormData
 ): Promise<ActionResult> {
-  await requireAuth();
+  const user = await requireAuth();
   const profile = await getProfile();
   if (!profile || !canCreateTickets(profile.role)) {
     return { error: "You do not have permission to create tickets" };
@@ -108,7 +108,7 @@ export async function createTicket(
       assignee_id,
       start_date,
       due_date,
-      created_by: profile.id,
+      created_by: user.id,
     })
     .select("id, ticket_number")
     .single();

@@ -86,7 +86,8 @@ interface RecipientProfile {
 }
 
 function ticketUrl(projectSlug: string, ticketNumber: number): string {
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? "https://trackly.dctinfotech.com";
+  const base =
+    process.env.NEXT_PUBLIC_APP_URL ?? "https://trackly.dctinfotech.com";
   return `${base.replace(/\/$/, "")}/projects/${projectSlug}/tickets/${ticketNumber}`;
 }
 
@@ -272,7 +273,8 @@ async function sendPushForTicketEvent(
 }
 
 async function notifyWelcome(event: WelcomeNotificationEvent): Promise<void> {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://trackly.dctinfotech.com";
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL ?? "https://trackly.dctinfotech.com";
   const { subject, html, text } = buildEmail("user_welcome", {
     recipientName: event.user.name,
     actorName: "Trackly",
