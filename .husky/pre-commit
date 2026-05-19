@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+# Auto-format code before commit
+echo "🔧 Formatting code before commit..."
+pnpm format
+
+# Stage the formatted files
+git add -u
+
+echo "✅ Code formatted and staged"
+
+exit 0

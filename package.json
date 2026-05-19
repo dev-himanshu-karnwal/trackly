@@ -1,0 +1,49 @@
+{
+  "name": "nextjs-starter",
+  "version": "1.0.0",
+  "description": "Next.js starter template with Tailwind CSS, TypeScript, ESLint, Prettier, and Husky",
+  "private": true,
+  "author": {
+    "name": "Himanshu Karnwal",
+    "email": "himanshukar1810@gmail.com",
+    "github": "https://github.com/dev-himanshu-karnwal"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dev-himanshu-karnwal/next-starter.git"
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky",
+    "setup": "git config core.hooksPath .husky && echo '✅ Husky hooks configured!'"
+  },
+  "dependencies": {
+    "next": "16.1.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.0",
+    "husky": "^9",
+    "prettier": "^3",
+    "prettier-plugin-tailwindcss": "^0.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

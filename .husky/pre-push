@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+# Get current branch name
+current_branch=$(git branch --show-current)
+
+# Block push to master branch
+if [ "$current_branch" = "master" ]; then
+  echo "❌ Pushing directly to 'master' branch is not allowed!"
+  echo "Please create a pull request instead."
+  exit 1
+fi
+
+# Run quality gates in order
+echo "🔍 Running pre-push checks..."
+
+echo "--------------------------------"
+echo "📝 Step 1/3: Checking code formatting..."
+pnpm format:check
+if [ $? -ne 0 ]; then
+  echo "❌ Formatting check failed!"
+  echo "Run 'pnpm format' to fix formatting issues."
+  exit 1
+fi
+
+echo "✅ Formatting check passed"
+
+echo "--------------------------------"
+echo "🔎 Step 2/3: Linting code..."
+pnpm lint
+if [ $? -ne 0 ]; then
+  echo "❌ Linting failed!"
+  exit 1
+fi
+
+echo "✅ Linting passed"
+
+echo "--------------------------------"
+echo "🏗️  Step 3/3: Building project..."
+pnpm build
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed!"
+  exit 1
+fi
+
+echo "✅ Build passed"
+
+echo "--------------------------------"
+echo "✅ All pre-push checks passed!"
+
+exit 0

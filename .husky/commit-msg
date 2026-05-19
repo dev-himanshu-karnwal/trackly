@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+# Validate commit message format: type(scope): short description
+commit_msg=$(cat "$1")
+
+if ! echo "$commit_msg" | grep -qE '^[a-zA-Z]+\([^)]+\): .+'; then
+  echo "❌ Invalid commit message format!"
+  echo ""
+  echo "Expected format: type(scope): short description"
+  echo ""
+  echo "Example: feat(home): add hero section"
+  echo ""
+  echo "Rules:"
+  echo "  - type is required"
+  echo "  - scope is required"
+  echo "  - description is required"
+  exit 1
+fi
+
