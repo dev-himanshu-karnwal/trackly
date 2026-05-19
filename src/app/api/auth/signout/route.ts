@@ -7,6 +7,6 @@ export async function POST() {
   const supabase = createClient(cookieStore);
   await supabase.auth.signOut();
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://trackly.dctinfotech.com";
   return NextResponse.redirect(new URL("/login", appUrl));
 }
