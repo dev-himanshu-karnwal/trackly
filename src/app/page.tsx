@@ -1,7 +1,8 @@
-export default function Home() {
-  return (
-    <>
-      <h1>HEllow</h1>
-    </>
-  );
+import { redirect } from "next/navigation";
+
+import { getSession } from "@/lib/auth";
+
+export default async function Page() {
+  const user = await getSession();
+  redirect(user ? "/dashboard" : "/login");
 }

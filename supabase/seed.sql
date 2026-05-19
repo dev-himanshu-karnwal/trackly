@@ -1,0 +1,32 @@
+-- Trackly seed data
+-- ---------------------------------------------------------------------------
+-- This file is intended for local development after `supabase db reset`.
+--
+-- IMPORTANT: The first admin user cannot be created purely via SQL seed
+-- because profiles.id must reference auth.users. Follow these steps:
+--
+-- 1. Start Supabase locally: `supabase start`
+-- 2. Apply migrations: `supabase db reset` (runs migrations + this seed)
+-- 3. In Supabase Studio (http://127.0.0.1:54323) → Authentication → Users
+--    → Add user with email/password for your admin account.
+-- 4. In SQL Editor, promote that user to admin and verify the profile exists
+--    (the `on_auth_user_created` trigger should have inserted it):
+--
+--    UPDATE public.profiles
+--    SET role = 'admin', name = 'Admin User'
+--    WHERE email = 'admin@trackly.local';
+--
+-- 5. Optionally add sample projects/members below once the admin exists.
+-- ---------------------------------------------------------------------------
+
+-- Example project (uncomment after admin user exists):
+--
+-- INSERT INTO public.projects (name, slug, description)
+-- VALUES ('Trackly Demo', 'trackly-demo', 'Sample project for local development');
+--
+-- INSERT INTO public.project_members (project_id, user_id)
+-- SELECT p.id, pr.id
+-- FROM public.projects p
+-- CROSS JOIN public.profiles pr
+-- WHERE p.slug = 'trackly-demo'
+--   AND pr.email = 'admin@trackly.local';
