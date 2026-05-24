@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createClient } from "@/utils/supabase/client";
+import { requestPasswordReset } from "@/app/forgot-password/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,17 +30,10 @@ export default function ForgotPasswordPage() {
   async function onSubmit(values: ForgotForm) {
     setMessage(null);
     setError(null);
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? window.location.origin;
-    const supabase = createClient();
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(
-      values.email,
-      {
-        redirectTo: `${appUrl}/reset-password`,
-      }
-    );
+    const result = await requestPasswordReset(values.email);
 
-    if (resetError) {
-      setError(resetError.message);
+    if ("error" in result) {
+      setError(result.error || "An error occurred");
       return;
     }
 

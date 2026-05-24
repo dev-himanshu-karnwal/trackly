@@ -53,6 +53,7 @@ export default async function EditTicketPage({
     <div className="p-6">
       <TicketForm
         slug={slug}
+        projectId={project.id}
         assignees={assignees}
         labels={labels ?? []}
         mode="edit"

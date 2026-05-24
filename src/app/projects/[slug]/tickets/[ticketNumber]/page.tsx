@@ -232,6 +232,8 @@ export default async function TicketDetailPage({
       <TicketInlineDescription
         slug={slug}
         ticketNumber={ticketNumber}
+        projectId={project.id}
+        ticketId={ticket.id}
         description={row.description ?? ""}
         saveAction={updateTicketDescription}
       />

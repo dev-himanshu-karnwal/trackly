@@ -26,6 +26,7 @@ import {
 import { sendPushToUser, type PushPayload } from "@/lib/push";
 import { createAdminClient } from "@/utils/supabase/admin";
 import type { TicketStatus } from "@/types/database";
+import { getAppUrl } from "../app-url";
 
 export type TicketNotificationType =
   | "CREATED"
@@ -86,8 +87,7 @@ interface RecipientProfile {
 }
 
 function ticketUrl(projectSlug: string, ticketNumber: number): string {
-  const base =
-    process.env.NEXT_PUBLIC_APP_URL ?? "https://trackly.dctinfotech.com";
+  const base = getAppUrl();
   return `${base.replace(/\/$/, "")}/projects/${projectSlug}/tickets/${ticketNumber}`;
 }
 
@@ -273,8 +273,7 @@ async function sendPushForTicketEvent(
 }
 
 async function notifyWelcome(event: WelcomeNotificationEvent): Promise<void> {
-  const appUrl =
-    process.env.NEXT_PUBLIC_APP_URL ?? "https://trackly.dctinfotech.com";
+  const appUrl = getAppUrl();
   const { subject, html, text } = buildEmail("user_welcome", {
     recipientName: event.user.name,
     actorName: "Trackly",

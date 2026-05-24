@@ -36,6 +36,7 @@ type Assignee = { id: string; name: string };
 
 type TicketFormProps = {
   slug: string;
+  projectId: string;
   assignees: Assignee[];
   labels: TicketLabel[];
   mode: "create" | "edit";
@@ -46,6 +47,7 @@ type TicketFormProps = {
 
 export function TicketForm({
   slug,
+  projectId,
   assignees,
   labels,
   mode,
@@ -129,7 +131,12 @@ export function TicketForm({
 
       <div className="space-y-2">
         <Label>Description</Label>
-        <MarkdownEditor value={description} onChange={setDescription} />
+        <MarkdownEditor
+          value={description}
+          onChange={setDescription}
+          projectId={projectId}
+          ticketId={ticket?.id}
+        />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

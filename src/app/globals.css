@@ -183,4 +183,18 @@
   .prose-ticket pre code {
     @apply bg-transparent p-0;
   }
+  .prose-ticket img {
+    @apply mx-auto my-4 block h-auto max-w-full rounded-lg;
+  }
+  .prose-ticket .ticket-markdown-image {
+    @apply my-4;
+  }
+  .prose-ticket .ticket-markdown-image img {
+    @apply my-0;
+  }
+}
+
+a,
+button {
+  @apply cursor-pointer;
 }

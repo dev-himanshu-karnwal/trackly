@@ -37,6 +37,7 @@ export default async function NewTicketPage({
     <div className="p-6">
       <TicketForm
         slug={slug}
+        projectId={project.id}
         assignees={assignees}
         labels={labels ?? []}
         mode="create"

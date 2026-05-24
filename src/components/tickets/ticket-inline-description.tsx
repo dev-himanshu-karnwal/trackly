@@ -15,6 +15,8 @@ type SaveResult = { error?: string; success?: boolean };
 type TicketInlineDescriptionProps = {
   slug: string;
   ticketNumber: number;
+  projectId: string;
+  ticketId: string;
   description: string;
   saveAction: (
     slug: string,
@@ -26,6 +28,8 @@ type TicketInlineDescriptionProps = {
 export function TicketInlineDescription({
   slug,
   ticketNumber,
+  projectId,
+  ticketId,
   description,
   saveAction,
 }: TicketInlineDescriptionProps) {
@@ -118,6 +122,8 @@ export function TicketInlineDescription({
             value={local}
             onChange={setLocal}
             onBlur={save}
+            projectId={projectId}
+            ticketId={ticketId}
             className="min-h-[200px]"
           />
         ) : (
